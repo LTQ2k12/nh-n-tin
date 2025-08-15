@@ -1,0 +1,22 @@
+<!-- chat.html -->
+<div id="chat-box" style="height:300px; overflow:auto; border:1px solid #ccc"></div>
+<input id="msg">
+<button onclick="sendMsg()">Send</button>
+
+<script>
+const chatBox = document.getElementById('chat-box');
+let messages = JSON.parse(localStorage.getItem('messages')||'[]');
+
+function renderMessages(){
+    chatBox.innerHTML = messages.map(m=>`<p><b>${m.user}:</b> ${m.text}</p>`).join('');
+}
+renderMessages();
+
+function sendMsg(){
+    const text = document.getElementById('msg').value;
+    const user = localStorage.getItem('current_user') || 'Me';
+    messages.push({user, text});
+    localStorage.setItem('messages', JSON.stringify(messages));
+    renderMessages();
+}
+</script>
